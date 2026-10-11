@@ -1,1 +1,14 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Clinical Case Logbook</title><link rel="stylesheet" href="styles.css"></head><body><header><h1>Clinical Case Logbook</h1></header><main><nav class="page-nav" aria-label="Logbook pages"><a href="index.html" aria-current="page">Home</a><a href="anaesthesia.html">Anaesthesia</a><a href="critical-care.html">Critical Care</a><a href="regional-anaesthesia.html">Regional Anaesthesia</a></nav><section class="dashboard-intro"><h2>Your logbooks, at a glance</h2><p>Review your records or choose a logbook to enter a case.</p></section><div class="logbook-grid"><a class="panel logbook-card" href="anaesthesia.html"><h2>Anaesthesia</h2><p>Anaesthetic cases, techniques and reflections.</p><div class="record-count" id="anaesthesia-total">—</div><span>cases recorded</span><p class="muted" id="anaesthesia-month"></p><span class="card-link">Open logbook →</span></a><a class="panel logbook-card" href="critical-care.html"><h2>Critical Care</h2><p>ICU cases, interventions and procedures.</p><div class="record-count" id="critical-care-total">—</div><span>cases recorded</span><p class="muted" id="critical-care-month"></p><span class="card-link">Open logbook →</span></a><a class="panel logbook-card" href="regional-anaesthesia.html"><h2>Regional Anaesthesia</h2><p>A dedicated regional anaesthesia logbook.</p><span class="coming-soon">For future development</span><span class="card-link">View planned logbook</span></a></div><section class="panel dashboard-note"><h3>Across your devices</h3><p>Summaries reflect records saved on this device. Open each logbook and connect Google Drive to bring in records from your other devices. Anaesthesia and Critical Care have separate case histories, exports and backups.</p></section><p id="dashboard-status" role="status"></p><script src="dashboard.js"></script></main><footer>Personal clinical logbook</footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clinical Case Logbook</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    const section = ['log', 'entries', 'census', 'export'].includes(location.hash.slice(1)) ? location.hash : '#log';
+    location.replace('anaesthesia.html' + section);
+  </script>
+</head>
+<body><main><p><a href="anaesthesia.html#log">Open your logbook →</a></p></main></body>
+</html>

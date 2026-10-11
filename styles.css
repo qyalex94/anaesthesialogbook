@@ -102,3 +102,17 @@ header h1{color:#303e46}
 .report h3{color:#455a68}th{background:#f4f7f9;color:#72828e}
 .case button[data-edit]{background:#f7fafd;border-color:#dce5ec;color:#55728a}
 .logbook-card:nth-child(1){border-top:3px solid #a5bace}.logbook-card:nth-child(2){border-top:3px solid #a3c2b2}.logbook-card:nth-child(3){border-top:3px solid #d8b695}
+
+/* Persistent sections, using the existing white theme and soft blue accents. */
+body:has(.bottom-nav){padding-bottom:calc(82px + env(safe-area-inset-bottom,0px))}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:8px max(16px,calc((100vw - 720px)/2)) calc(8px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid #e9e9e7}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:54px;padding:7px 10px;border-radius:5px;color:#787774;text-decoration:none;font-size:12px;font-weight:500}
+.bottom-nav svg{width:21px;height:21px;flex-shrink:0}
+.bottom-nav a:hover{background:#f7f7f5;color:#37352f}
+.bottom-nav a[aria-current=page]{background:#edf3f7;color:#41657c}
+.logbook-view>h2,.logbook-view .panel>h2{font-size:24px;font-weight:650;letter-spacing:-.5px;margin:0 0 14px;color:#37352f}
+.logbook-view .report{border:0;padding-top:0;margin-top:0}
+.export-panel{margin-bottom:24px}
+.export-panel .intro{margin:0}
+.text-link{color:#547286;font-size:13px;text-underline-offset:3px}
+@media(max-width:450px){.bottom-nav{padding-left:10px;padding-right:10px}.bottom-nav a{padding-left:5px;padding-right:5px}}
