@@ -116,3 +116,33 @@ body:has(.bottom-nav){padding-bottom:calc(82px + env(safe-area-inset-bottom,0px)
 .export-panel .intro{margin:0}
 .text-link{color:#547286;font-size:13px;text-underline-offset:3px}
 @media(max-width:450px){.bottom-nav{padding-left:10px;padding-right:10px}.bottom-nav a{padding-left:5px;padding-right:5px}}
+
+/* Five logbooks, each with a restrained Notion-style colour. */
+.logbook-tabs{gap:8px;align-items:stretch}
+.logbook-tabs a{--tab-color:#54738d;--tab-bg:#edf3f8;display:flex;align-items:center;gap:8px;border:1px solid transparent;font-size:13px;padding:10px 12px;white-space:nowrap}
+.logbook-tabs a[data-logbook="critical-care"]{--tab-color:#597e6b;--tab-bg:#edf5ef}
+.logbook-tabs a[data-logbook="aps-pain"]{--tab-color:#a37a48;--tab-bg:#fbf3e8}
+.logbook-tabs a[data-logbook="cme"]{--tab-color:#856ca1;--tab-bg:#f3eef9}
+.logbook-tabs a[data-logbook="duties-rotation"]{--tab-color:#a37180;--tab-bg:#faeff3}
+.logbook-tab-dot{width:7px;height:7px;border-radius:50%;background:var(--tab-color);flex-shrink:0}
+.logbook-tabs a[aria-current=page],.logbook-tabs a:hover{color:var(--tab-color);background:var(--tab-bg);border-color:var(--tab-bg)}
+body[data-logbook="aps-pain"]{--activity-color:#a37a48;--activity-bg:#fbf3e8}
+body[data-logbook="cme"]{--activity-color:#856ca1;--activity-bg:#f3eef9}
+body[data-logbook="duties-rotation"]{--activity-color:#a37180;--activity-bg:#faeff3}
+body[data-logbook] #form>fieldset{border-left-color:var(--activity-color)}
+body[data-logbook] #form>fieldset>legend{color:var(--activity-color)}
+.option-group{margin:0;padding:0;border:0;min-width:0}
+.option-group>legend{font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;color:#57564f;margin-bottom:10px}
+.option-chips{display:flex;flex-wrap:wrap;gap:8px}
+.option-chip{display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #e9e9e7;border-radius:4px;font-size:13px;font-weight:400;cursor:pointer;background:#fff}
+.option-chip input{width:15px;height:15px;margin:0;accent-color:var(--activity-color,#66869d);box-shadow:none;flex-shrink:0}
+.option-chip:has(input:checked){border-color:var(--activity-color,#66869d);background:var(--activity-bg,#edf3f8);color:var(--activity-color,#54738d)}
+.option-chip:focus-within{outline:2px solid #9db8cd;outline-offset:2px}
+.date-shortcuts{display:flex;gap:8px;margin-top:10px}.date-shortcuts button{font-size:12px;padding:6px 11px}
+.duty-group{margin:24px 0}.duty-group h4{font-size:13px;font-weight:600;color:#57564f;margin:0 0 12px}
+.duty-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.duty-button{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;min-height:48px;background:#fff}
+.duty-button:hover{background:var(--activity-bg,#faeff3)}
+.duty-count{min-width:26px;padding:3px 7px;border-radius:4px;background:var(--activity-bg,#faeff3);color:var(--activity-color,#a37180);text-align:center;font-size:12px}
+.activity-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:550px){.logbook-tabs{gap:6px}.logbook-tabs a{padding:9px 10px;font-size:12px}.option-chip{font-size:12px;padding:8px 10px}.duty-buttons{grid-template-columns:1fr 1fr}}

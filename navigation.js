@@ -10,11 +10,9 @@
       if (sections[index] === current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     }
-    // Keep the current section when switching between the two active logbooks.
-    for (const link of document.querySelectorAll('.page-nav a')) {
-      if (/(?:^|\/)(anaesthesia|critical-care)\.html(?:#.*)?$/.test(link.getAttribute('href'))) {
-        link.hash = current;
-      }
+    // Keep the current section when switching logbooks.
+    for (const link of document.querySelectorAll('.page-nav a[data-logbook]')) {
+      link.hash = current;
     }
     if (location.hash !== `#${current}`) history.replaceState(null, '', `#${current}`);
     if (focus) {
