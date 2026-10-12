@@ -1,0 +1,24 @@
+.show-monthly-census .logbook-tabs{display:none!important}
+.monthly-census>h2{font-size:24px;margin:0 0 16px}
+.census-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.census-toolbar label{font-size:13px}.census-toolbar select{max-width:230px;margin:0}
+.census-status,.census-section>p{font-size:12px;color:#787774;line-height:1.5}
+.census-section{margin:24px 0}.census-section h3{font-size:17px;color:#54738d;margin:0 0 10px}.tone-2 h3{color:#597e6b}.tone-3 h3{color:#856ca1}.tone-4 h3{color:#a37a48}
+.census-scroll{overflow:auto;border:1px solid #e5e5e2;border-radius:5px;background:white}
+.census-scroll table{width:100%;min-width:950px;margin:0;font-variant-numeric:tabular-nums;border-collapse:separate;border-spacing:0;font-size:12px}
+.census-scroll th,.census-scroll td{padding:10px 9px;text-align:center;border-bottom:1px solid #eee}
+.census-scroll th:first-child{position:sticky;left:0;z-index:1;text-align:left;min-width:175px;max-width:210px;background:#fafaf9;white-space:normal;font-weight:500}
+.census-scroll thead th{background:#edf3f8;color:#54738d;font-weight:600;white-space:nowrap}
+.census-scroll td:last-child,.census-scroll thead th:last-child{font-weight:650;background:#f0f5f7}
+.census-scroll .compulsory-table{min-width:600px}
+@media(max-width:550px){.census-scroll th:first-child{min-width:130px;max-width:155px}.census-scroll th,.census-scroll td{padding:9px 7px}}
+.census-scroll th{text-transform:none;letter-spacing:0;font-size:12px}
+.census-scroll td:last-child,.census-scroll thead th:last-child{position:sticky;right:0;z-index:2;box-shadow:-1px 0 #e5e5e2}
+.census-scroll .compulsory-table td:last-child{position:static;box-shadow:none}
+
+.census-overview{margin:24px 0}.census-overview h3{font-size:17px;color:#54738d;margin:0 0 10px}
+.census-total-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.census-total-card{padding:16px;border:1px solid #e5e5e2;border-top:3px solid #a5bace;border-radius:5px;background:#fafcff}
+.census-total-card span{display:block;font-size:12px;color:#787774}.census-total-card strong{display:block;font-size:28px;color:#476584;margin-top:8px}
+.census-total-card:nth-child(2){background:#fafdfb;border-top-color:#a3c2b2}.census-total-card:nth-child(3){background:#fffcf9;border-top-color:#d8b695}.census-total-card:nth-child(4){background:#fcfbff;border-top-color:#bcadd0}
+@media(max-width:550px){.census-total-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}

@@ -11,6 +11,8 @@ function localDate(date = new Date()) {
 }
 
 function normalise(record) {
+  record = {...record};
+  if(config.quickGroups)record.duty=({'Elective OT in-charge — SMO':'Elective OT in-charge — Registrar','On-call — SMO':'On-call — Registrar'})[record.duty]||record.duty;
   const result = {...record, attachments: record.attachments || []};
   for (const [key,,type] of fields) result[key] = type === 'multi' ? (Array.isArray(record[key]) ? record[key] : []) : String(record[key] ?? '');
   return result;
@@ -28,7 +30,14 @@ function isDraft(record) {
   return (config.draftKeys || []).some(key => !String(record[key] || '').trim());
 }
 
+function updateDutyOther() {
+  if (!config.quickGroups || !$('dutyOther')) return;
+  const show = $('duty').value === 'On-call — Others';
+  $('dutyOtherField').hidden = !show; $('dutyOther').disabled = !show; $('dutyOther').required = show;
+}
+
 function updateDraftHint() {
+  updateDutyOther();
   $('draft-hint').textContent = config.draftKeys
     ? (isDraft(readForm()) ? 'You can save a draft now and complete the patient ID, service, diagnosis and learning notes later.' : 'Ready to save.')
     : '';
@@ -55,6 +64,9 @@ function buildForm() {
       } else if (type !== 'textarea') input.type = type;
       if (type === 'text' || type === 'textarea') input.maxLength = type === 'textarea' ? 3000 : 300;
       if (key === 'date') input.value = localDate();
+      if (config.slug === 'cme' && key === 'title') { wrapper.classList.add('wide','primary-entry'); input.placeholder='Enter the session title and place'; }
+      if (config.slug === 'aps-pain' && key === 'place') input.placeholder='e.g. Labour room, ward, emergency department';
+      if (config.slug === 'aps-pain' && key === 'learning') wrapper.classList.add('wide');
       if (key === 'rotation') input.placeholder = 'e.g. General anaesthesia, ICU, obstetrics';
       if (key === 'learning') input.placeholder = 'Optional now — add your reflection later';
       wrapper.appendChild(input);
@@ -83,6 +95,9 @@ function buildForm() {
       const button = event.target.closest('[data-duty]');
       if (!button || button.disabled) return;
       $('duty').value = button.dataset.duty;
+      updateDutyOther();
+      if ($('duty').value === 'On-call — Others') { $('save').hidden=false; $('dutyOther').focus(); return; }
+      $('save').hidden=true;
       await saveEntry({quick: true});
     };
     $('date').addEventListener('input', renderDutyCounts);
@@ -170,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       for (const [key,,type] of fields) {
         if (type === 'multi' || type === 'radio') {
           for (const input of document.querySelectorAll(`input[name="${key}"]`)) input.checked = type === 'multi' ? record[key].includes(input.value) : record[key] === input.value;
-        } else $(key).value = record[key];
+        } else { if(type==='select' && record[key] && ![...$(key).options].some(option=>option.value===record[key]))$(key).append(new Option(record[key]+' (saved)',record[key])); $(key).value = record[key]; }
       }
       if (config.quickGroups) { $('quick-duties').hidden = true; $('dutyField').hidden = false; $('save').hidden = false; $('duty').required = true; }
       $('formtitle').textContent = config.formTitle + ' — Edit'; $('save').textContent = 'Update entry'; $('status').textContent = '';

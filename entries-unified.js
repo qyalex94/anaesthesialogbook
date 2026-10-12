@@ -26,6 +26,7 @@
     for(const event of state.events)if(!superseded.has(event.id)){if(!groups.has(event.caseId))groups.set(event.caseId,[]);groups.get(event.caseId).push(event);}
     return [...groups.values()].flatMap(heads=>{const live=heads.filter(event=>!event.deleted).sort((a,b)=>b.at.localeCompare(a.at)||b.id.localeCompare(a.id));return live.length?[{...live[0].record,_conflict:heads.length>1}]:[];});
   }
+  window.readAllLogbookEntries=()=>{const rows=[],errors=[];for(const source of categories){try{rows.push(...readEntries(source).map(record=>({...record,kind:source.id})));}catch{errors.push(source.label);}}return {rows,errors};};
   function refresh(){
     const rows=[],failed=[];
     for(const source of categories){try{rows.push(...readEntries(source).map(record=>({source,record})));}catch{failed.push(source.label);}}
@@ -36,7 +37,7 @@
     list.innerHTML=visible.map(({source,record:r})=>{
       const title=r.procedure||r.diagnosis||r.title||r.duty||'Untitled entry';
       const secondary=[r.procedure&&r.diagnosis,r.rn&&'ID: '+r.rn,r.specialty||r.discipline||r.service||r.activity||r.rotation].filter(Boolean);
-      const notes=[r.management,r.notes,r.learning,r.treatment].filter(value=>typeof value==='string'&&value.trim()).join(' · ');
+      const notes=[r.management,r.notes,r.learning,r.treatment,r.dutyOther].filter(value=>typeof value==='string'&&value.trim()).join(' · ');
       const target=source.file+'?entry='+encodeURIComponent(r.id);
       return '<article class="entry-card"><div class="entry-meta"><span class="entry-category" data-category="'+source.id+'">'+source.label+'</span><time>'+escape(String(r.date||'').split('-').reverse().join('/'))+'</time>'+(r._conflict?'<span class="tag">Sync conflict</span>':'')+'</div><h3>'+escape(title)+'</h3>'+(secondary.length?'<p>'+secondary.map(escape).join(' · ')+'</p>':'')+(notes?'<p class="entry-notes">'+escape(notes)+'</p>':'')+'<div class="actions"><a class="entry-edit" href="'+escape(target+'&entryAction=edit#log')+'">View / edit</a><a class="entry-delete" href="'+escape(target+'&entryAction=delete#entries')+'">Delete</a></div></article>';
     }).join('')||'<div class="empty">'+(query?'No entries match your search.':category==='all'?'No entries recorded yet.':'No entries in this category yet.')+'</div>';

@@ -8,7 +8,7 @@ function validateEvent(event) {
   }
   if (!event.deleted && (!event.record || event.record.id !== event.caseId ||
       typeof event.record.date !== 'string' || typeof event.record[config.titleKey] !== 'string' ||
-      fields.some(([key,,type]) => type === 'multi' ? !Array.isArray(event.record[key]) || !event.record[key].every(v => typeof v === 'string') : typeof event.record[key] !== 'string') || !Array.isArray(event.record.attachments) ||
+      fields.some(([key,,type]) => key === 'dutyOther' && event.record[key] === undefined ? false : type === 'multi' ? !Array.isArray(event.record[key]) || !event.record[key].every(v => typeof v === 'string') : typeof event.record[key] !== 'string') || !Array.isArray(event.record.attachments) ||
       !event.record.attachments.every(a => validId(a.id) && typeof a.name === 'string' &&
         typeof a.type === 'string' && a.type.startsWith('image/')))) {
     throw Error('A saved entry has an invalid format. Sync stopped without removing local entries.');
