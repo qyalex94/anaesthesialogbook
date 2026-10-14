@@ -1,0 +1,15 @@
+.show-unified-export .logbook-tabs{display:none!important}
+.unified-export{display:grid;gap:18px}
+.unified-export .panel{padding:20px!important}
+.unified-export h2{font-size:24px;margin:0 0 8px}
+.unified-export .export-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.unified-export .export-categories legend{grid-column:1/-1;margin-bottom:10px}
+.unified-export .export-choice{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:400;line-height:1.4}
+.unified-export .export-choice input{width:18px;height:18px;flex-shrink:0;margin:0;accent-color:#167368}
+.unified-export .export-dates{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.unified-export .export-auto{margin-top:20px}
+.unified-export [role=status]{font-size:14px;line-height:1.5}
+.unified-sync-results{padding-left:20px;font-size:13px;color:#4f6b64;line-height:1.6}
+.unified-sync-results li{margin:8px 0;overflow-wrap:anywhere}
+.unified-conflicts pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+@media(max-width:500px){.unified-export .panel{padding:15px!important}.unified-export .export-categories{grid-template-columns:1fr}.unified-export .actions button,.unified-export #unified-export-csv{width:100%}.unified-export .export-dates{grid-template-columns:1fr}}

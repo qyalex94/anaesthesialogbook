@@ -1,0 +1,23 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const vm=require('node:vm');
+let now=1000;
+const context=vm.createContext({self:{},Date:{now:()=>now},Set});
+vm.runInContext(fs.readFileSync(path.join(__dirname,'../drive-session-worker.js'),'utf8'),context);
+function connect(){const messages=[];const port={postMessage:value=>messages.push(value),start(){}};context.self.onconnect({ports:[port]});return {messages,request(data){port.onmessage({data});return messages.filter(item=>item.id===data.id).at(-1)?.result;}};}
+const first=connect(),second=connect();
+const session={token:'fictional-token',expiry:5000,account:{id:'fictional-account'}};
+first.request({id:1,action:'set',session});
+assert.equal(second.request({id:2,action:'get'}).token,'fictional-token','pages share the in-memory connection');
+assert.equal(first.request({id:3,action:'lock',owner:'one'}),true);
+assert.equal(second.request({id:4,action:'lock',owner:'two'}),false,'only one page syncs at a time');
+second.request({id:5,action:'unlock',owner:'two'});
+assert.equal(second.request({id:6,action:'lock',owner:'two'}),false,'another page cannot release the sync lock');
+first.request({id:7,action:'unlock',owner:'one'});
+assert.equal(second.request({id:8,action:'lock',owner:'two'}),true);
+now=6000;assert.equal(first.request({id:9,action:'get'}),null,'expired Google access is not reused');
+first.request({id:10,action:'set',session:{...session,expiry:10000}});second.request({id:11,action:'clear'});
+assert.equal(first.request({id:12,action:'get'}),null,'disconnect clears access for all pages');
+now=200000;assert.equal(first.request({id:13,action:'lock',owner:'one'}),true,'abandoned lock expires');
+console.log('Shared Google connection, sync locking, expiry and disconnect passed');
