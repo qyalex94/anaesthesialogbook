@@ -146,6 +146,8 @@ async function saveEntry({quick = false} = {}) {
   if (config.quickGroups && !data.duty) return;
   if (editing) data.id = editing;
   const wasDraft = isDraft(data);
+  const wasEditing = !!editing;
+  window.logbookFeedback?.hide();
   const buttons = [$('save'), ...document.querySelectorAll('[data-duty]')];
   buttons.forEach(button => button.disabled = true);
   $('status').textContent = 'Saving…';
@@ -155,6 +157,7 @@ async function saveEntry({quick = false} = {}) {
     if (!quick) reset();
     render();
     $('status').textContent = (quick ? data.duty : wasDraft ? 'Draft' : 'Entry') + ' saved on this device. Open Export for Google Drive sync status.';
+    window.logbookFeedback?.showSaved({draft: wasDraft, updated: wasEditing});
   } catch (error) { $('status').textContent = error.message + ' Your form has been kept; try again.'; }
   finally { buttons.forEach(button => button.disabled = false); }
 }
